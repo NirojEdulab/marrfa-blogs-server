@@ -10,9 +10,21 @@ const blogRoutes = require('./routes/blogRoutes');
 const mongoose = require('mongoose');
 
 const app = express();
+app.use(cors({ origin: process.env.CLIENT_API, credentials: true }));
+app.use(
+  express.json({
+    limit: "16kb",
+  })
+);
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: "16kb",
+  })
+);
+app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/blogs', blogRoutes);
