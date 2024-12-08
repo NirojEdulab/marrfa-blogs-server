@@ -3,8 +3,7 @@ const Blog = require('../models/blog');
 const cloudinary = require('../utils/cloudinary');
 
 exports.createBlog = async (req, res) => {
-  const { title, content } = req.body;
-
+  const { title, content, categories } = req.body;
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'Image file is required' });
@@ -22,6 +21,7 @@ exports.createBlog = async (req, res) => {
       imageUrl: result.secure_url,
       publicId: result.public_id,
       author: req.user.email,
+      categories: Array.isArray(categories) ? categories : [],
     });
 
     await blog.save();

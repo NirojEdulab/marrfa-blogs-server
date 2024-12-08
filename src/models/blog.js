@@ -6,6 +6,7 @@ const blogSchema = new mongoose.Schema({
   imageUrl: { type: String, required: true }, // Mandatory field
   publicId: { type: String, required: true }, // For Cloudinary image management
   author: { type: String, required: true },
+  categories: { type: [String], default: [] },
   createdAt: { type: Date, default: Date.now },
 });
 

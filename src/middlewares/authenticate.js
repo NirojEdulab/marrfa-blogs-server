@@ -8,6 +8,7 @@ exports.authenticate = (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1];
+    
     if (!token) {
       return res.status(401).json({ message: "Token missing" });
     }
@@ -16,11 +17,12 @@ exports.authenticate = (req, res, next) => {
       if (err) {
         const errorMessage =
           err.name === "TokenExpiredError" ? "Token expired" : "Invalid token";
-        console.log("Token expired...");
+        console.log("Token failed...", errorMessage);
         
         return res.status(403).json({ message: errorMessage });
       }
 
+      console.log("Authenticated...");
       // Assign decoded payload to req.user
       req.user = decoded;
       next();
